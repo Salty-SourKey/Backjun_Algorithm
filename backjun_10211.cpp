@@ -17,13 +17,14 @@ int main(){
         }
         maximum = array[0];
         for(int i = 0; i < n; i++){
-            for(int j = i+1; j < n; j++){
+            for(int j = i; j < n; j++){
                 maximum = max(maximum,pSum[j+1]-pSum[i]);
             }
         }
-        printf("%d\n", maximum);
+        ans[q-t] = maximum;
         t--;
     }
+    for(int i = 0; i < q; i++) printf("%d\n", ans[i]);
     return 0;
 }
 
