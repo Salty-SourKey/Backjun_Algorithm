@@ -12,8 +12,8 @@ int main(){
     }
     int minimum=0;
     for(int i = M-1; i< N; i++){
+        minimum = min(minimum, pSum[i+1-M]);
         result = max(pSum[i+1]-minimum, result);
-        minimum = min(minimum, pSum[i+2-M]);
     }
     printf("%d\n", result);
     return 0;
