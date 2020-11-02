@@ -1,19 +1,17 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int dp[1000001];
+
+int go_to_one(int x){
+    if(x == 1) return 0;
+    if(x < 1) return 1000001;
+    return min(go_to_one(x/3) + x%3 + 1, go_to_one(x/2) + x%2 + 1);
+}
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
     int N;
     cin >> N;
-    dp[1] = 0;
-    for(int x = 2; x <= N; ++x){
-        if(x % 6 == 0) dp[x] = min(min(dp[x-1], dp[x/2]), dp[x/3])+1;
-        else if(x % 3 == 0) dp[x] = min(dp[x-1], dp[x/3])+1;
-        else if(x % 2 == 0) dp[x] = min(dp[x-1], dp[x/2])+1;
-        else dp[x] = dp[x-1]+1;
-    }
-    cout << dp[N];
+    cout << go_to_one(N);
     return 0;
 }
