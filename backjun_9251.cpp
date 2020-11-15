@@ -2,39 +2,29 @@
 #include <string>
 #include <algorithm>
 using namespace std;
-int arr[1001];
-int dp[1001][2];
+int dp[1001][1001];
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
-    string dt_1;
-    string dt_2;
-    cin >> dt_1 >> dt_2;
-    for(int i = 0; i < dt_1.length(); ++i){
-        if(dt_2.find(dt_1[i] ) == -1){
-            dp[i][0] = 0;
-            dp[i][1] = -1;
-            } else{
-            dp[i][0] = 1;
-            dp[i][1] = dt_2.find(dt_1[i]);
-            }
-        for(int j = 0; j < i; ++j){
-            if(dt_2.find(dt_1[i], dp[j][1]+1) != -1){
-                if(dp[i][0] == dp[j][0]+1 && dp[j][1] != -1) dp[i][1] = min(dp[j][1], dp[i][1]);
-                else if(dp[i][0] < dp[j][0] + 1){
-                    dp[i][0] = dp[j][0] + 1;
-                    dp[i][1] = dt_2.find(dt_1[i], dp[j][1]+1);
-                }
+    string st_1, st_2;
+    cin >> st_1 >> st_2;
+    st_1 = "0" + st_1;
+    st_2 = "0" + st_2;
+    for(int i = 0; i < st_1.length(); i++){
+        for(int j = 0; j < st_2.length(); j++){
+            if(i == 0 || j == 0){
+                dp[i][j] = 0;
+                continue;
             }
             else{
-                if(dp[i][0] == dp[j][0] && dp[j][1] != -1) dp[i][1] = min(dp[j][1], dp[i][1]);
-                else if(dp[i][0] < dp[j][0] + 1){
-                    dp[i][0] = dp[j][0];
-                    dp[i][1] = dp[j][1];
+                if(st_1[i] == st_2[j]) dp[i][j] = dp[i-1][j-1] + 1;
+                else{
+                    if(dp[i-1][j] > dp[i][j-1]) dp[i][j] = dp[i-1][j];
+                    else dp[i][j] = dp[i][j-1]; 
                 }
             }
         }
     }
-    cout << dp[dt_1.length()-1][0];
+    cout << dp[st_1.length()-1][st_2.length()-1];
     return 0;
 }
